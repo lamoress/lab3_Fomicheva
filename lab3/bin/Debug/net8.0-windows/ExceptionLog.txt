@@ -1,0 +1,20 @@
+Дата: 03.11.2024 21:32:18
+Исключение: System.InvalidOperationException
+Сообщение: Object is currently in use elsewhere.
+Метод: System.Drawing.Graphics FromImage(System.Drawing.Image)
+Стек вызовов:    at System.Drawing.Graphics.FromImage(Image image)
+   at lab3.Part2Form.<>c__DisplayClass3_0.<DrawFractalAsync>b__0() in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 53
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at lab3.Part2Form.DrawFractalAsync() in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 51
+--------------------------------------------------------------------------------
+Дата: 03.11.2024 21:47:57
+Исключение: System.ArgumentException
+Сообщение: Parameter is not valid.
+Метод: Void .ctor(Int32, Int32)
+Стек вызовов:    at System.Drawing.Bitmap..ctor(Int32 width, Int32 height)
+   at lab3.Part2Form.DrawFractalAsync() in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 39
+--------------------------------------------------------------------------------
