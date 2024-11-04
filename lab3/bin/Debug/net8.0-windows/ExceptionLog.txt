@@ -18,3 +18,43 @@
 Стек вызовов:    at System.Drawing.Bitmap..ctor(Int32 width, Int32 height)
    at lab3.Part2Form.DrawFractalAsync() in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 39
 --------------------------------------------------------------------------------
+Дата: 04.11.2024 0:55:20
+Исключение: System.OutOfMemoryException
+Сообщение: Out of memory.
+Метод: Void .ctor(System.Drawing.Drawing2D.GraphicsPath)
+Стек вызовов:    at System.Drawing.Drawing2D.PathGradientBrush..ctor(GraphicsPath path)
+   at lab3.Part2Form.CreateRadialGradientBrush(Single centerX, Single centerY, Single radius, Int32 maxDepth) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 186
+   at lab3.Part2Form.DrawSierpinskiCarpet(Graphics g, Int32 depth, Single x, Single y, Single size, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 130
+   at lab3.Part2Form.DrawSierpinskiCarpet(Graphics g, Int32 depth, Single x, Single y, Single size, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 139
+   at lab3.Part2Form.DrawSierpinskiCarpet(Graphics g, Int32 depth, Single x, Single y, Single size, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 139
+   at lab3.Part2Form.DrawSierpinskiCarpet(Graphics g, Int32 depth, Single x, Single y, Single size, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 139
+   at lab3.Part2Form.DrawSierpinskiCarpet(Graphics g, Int32 depth, Single x, Single y, Single size, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 139
+   at lab3.Part2Form.DrawSierpinskiCarpet(Graphics g, Int32 depth, Single x, Single y, Single size, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 139
+   at lab3.Part2Form.<>c__DisplayClass3_1.<DrawFractalAsync>b__0() in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 60
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at lab3.Part2Form.DrawFractalAsync() in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 55
+--------------------------------------------------------------------------------
+Дата: 04.11.2024 0:55:24
+Исключение: System.OutOfMemoryException
+Сообщение: Out of memory.
+Метод: Void .ctor(System.Drawing.Drawing2D.GraphicsPath)
+Стек вызовов:    at System.Drawing.Drawing2D.PathGradientBrush..ctor(GraphicsPath path)
+   at lab3.Part2Form.CreateRadialGradientBrush(Single centerX, Single centerY, Single radius, Int32 maxDepth) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 186
+   at lab3.Part2Form.DrawSierpinskiTriangle(Graphics g, Int32 depth, PointF a, PointF b, PointF c, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 146
+   at lab3.Part2Form.DrawSierpinskiTriangle(Graphics g, Int32 depth, PointF a, PointF b, PointF c, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 163
+   at lab3.Part2Form.DrawSierpinskiTriangle(Graphics g, Int32 depth, PointF a, PointF b, PointF c, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 163
+   at lab3.Part2Form.DrawSierpinskiTriangle(Graphics g, Int32 depth, PointF a, PointF b, PointF c, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 163
+   at lab3.Part2Form.DrawSierpinskiTriangle(Graphics g, Int32 depth, PointF a, PointF b, PointF c, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 163
+   at lab3.Part2Form.DrawSierpinskiTriangle(Graphics g, Int32 depth, PointF a, PointF b, PointF c, Int32 maxDepth, CancellationToken token) in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 163
+   at lab3.Part2Form.<>c__DisplayClass3_1.<DrawFractalAsync>b__0() in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 62
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at lab3.Part2Form.DrawFractalAsync() in C:\Users\Ivan\source\repos\lab3\lab3\Part2Form.cs:line 55
+--------------------------------------------------------------------------------

@@ -15,14 +15,14 @@ namespace lab3
             var part1Form = new Part1Form();
             part1Form.Show();
         }
-        
-        
+
+
         private void btnPart2_Click(object sender, EventArgs e)
         {
             var part1Form = new Part2Form();
             part1Form.Show();
         }
-        
+
         private void btnOpenLog_Click(object sender, EventArgs e)
         {
             try

@@ -33,6 +33,14 @@ namespace lab3
             radioButtonSolid.Checked = true;
             numericUpDownFrequency.Value = (decimal)frequency;
             numericUpDownPhase.Value = (decimal)(phaseShift * (180.0 / Math.PI));
+            numericUpDownHarmonics.Value = harmonics;
+
+            numericUpDownHarmonics.ValueChanged += numericUpDownHarmonics_ValueChanged;
+            numericUpDownFrequency.ValueChanged += numericUpDownFrequency_ValueChanged;
+            numericUpDownPhase.ValueChanged += numericUpDownPhase_ValueChanged;
+            radioButtonSquare.CheckedChanged += radioButton_CheckedChanged;
+            radioButtonTriangle.CheckedChanged += radioButton_CheckedChanged;
+            radioButtonSawtooth.CheckedChanged += radioButton_CheckedChanged;
         }
 
         private void InitializeCanvas()
@@ -42,7 +50,6 @@ namespace lab3
             {
                 g.Clear(Color.White);
             }
-
             pictureBoxCanvas.Image = originalBitmap;
             pictureBoxCanvas.SizeMode = PictureBoxSizeMode.Zoom;
         }
@@ -122,16 +129,13 @@ namespace lab3
                             originalBitmap = new Bitmap(loadedBitmap, pictureBoxCanvas.Width, pictureBoxCanvas.Height);
                             pictureBoxCanvas.Image = originalBitmap;
                         }
-
                         pictureBoxCanvas.Invalidate();
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ExceptionLogger.LogException(ex);
-                MessageBox.Show("Ошибка при открытии изображения.", "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка при открытии изображения.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -149,11 +153,9 @@ namespace lab3
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ExceptionLogger.LogException(ex);
-                MessageBox.Show("Ошибка при сохранении изображения.", "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка при сохранении изображения.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -165,12 +167,10 @@ namespace lab3
                 {
                     g.Clear(Color.White);
                 }
-
                 pictureBoxCanvas.Invalidate();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ExceptionLogger.LogException(ex);
                 MessageBox.Show("Ошибка при очистке холста.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -191,15 +191,11 @@ namespace lab3
                 Point currentPoint = TranslatePoint(e.Location);
                 using (Graphics g = Graphics.FromImage(originalBitmap))
                 {
-                    using (Pen pen = new Pen(lineColor, lineWidth)
-                    {
-                        DashStyle = dashStyle
-                    })
+                    using (Pen pen = new Pen(lineColor, lineWidth) { DashStyle = dashStyle })
                     {
                         g.DrawLine(pen, previousPoint, currentPoint);
                     }
                 }
-
                 previousPoint = currentPoint;
                 pictureBoxCanvas.Invalidate();
             }
@@ -237,11 +233,9 @@ namespace lab3
                 await Task.Run(() => DrawFourierSignal());
                 btnDrawFourier.Enabled = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ExceptionLogger.LogException(ex);
-                MessageBox.Show("Ошибка при отрисовке сигнала Фурье.", "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка при отрисовке сигнала Фурье.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 btnDrawFourier.Enabled = true;
             }
         }
@@ -251,34 +245,25 @@ namespace lab3
             Bitmap tempBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
             using (Graphics g = Graphics.FromImage(tempBitmap))
             {
-                g.DrawImage(originalBitmap, 0, 0, originalBitmap.Width, originalBitmap.Height);
+                g.Clear(Color.White);
                 g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 int width = tempBitmap.Width;
                 int height = tempBitmap.Height;
 
+                DrawAxes(g, width, height);
+
                 PointF[] points = new PointF[width];
                 for (int x = leftMargin; x < width - rightMargin; x++)
                 {
-                    double t =
-                        2 * Math.PI * frequency * ((x - leftMargin) / (double)(width - leftMargin - rightMargin)) +
-                        phaseShift;
-                    double y = 0;
-                    for (int n = 1; n <= harmonics; n++)
-                    {
-                        double amplitude = GetAmplitude(n);
-                        if (amplitude != 0)
-                        {
-                            y += amplitude * Math.Sin(n * t);
-                        }
-                    }
+                    double t = 2 * Math.PI * frequency * ((x - leftMargin) / (double)(width - leftMargin - rightMargin)) + phaseShift;
+                    double y = ComputeFourierSeriesIterative(t, harmonics);
 
                     y = Math.Max(-1.0, Math.Min(1.0, y));
 
                     points[x] = new PointF(x, (float)(height / 2 * (1 - y)));
                 }
 
-                // Fill under the signal
                 if (fillColor != Color.Transparent)
                 {
                     PointF[] fillPoints = new PointF[(width - leftMargin - rightMargin) + 2];
@@ -287,9 +272,7 @@ namespace lab3
                     {
                         fillPoints[x - leftMargin + 1] = points[x];
                     }
-
-                    fillPoints[(width - leftMargin - rightMargin) + 1] =
-                        new PointF(width - rightMargin - 1, height / 2);
+                    fillPoints[(width - leftMargin - rightMargin) + 1] = new PointF(width - rightMargin - 1, height / 2);
 
                     using (SolidBrush brush = new SolidBrush(fillColor))
                     {
@@ -297,8 +280,7 @@ namespace lab3
                     }
                 }
 
-                // Draw the signal line
-                using (Pen pen = new Pen(lineColor, 2))
+                using (Pen pen = new Pen(lineColor, lineWidth) { DashStyle = dashStyle })
                 {
                     for (int x = leftMargin + 1; x < width - rightMargin; x++)
                     {
@@ -328,6 +310,17 @@ namespace lab3
             tempBitmap.Dispose();
         }
 
+        private double ComputeFourierSeriesIterative(double t, int n)
+        {
+            double y = 0.0;
+            for (int i = 1; i <= n; i++)
+            {
+                double amplitude = GetAmplitude(i);
+                y += amplitude * Math.Sin(i * t);
+            }
+            return y;
+        }
+
         private double GetAmplitude(int n)
         {
             switch (fourierShape)
@@ -353,19 +346,57 @@ namespace lab3
                     }
                 case "Пилообразная":
                 default:
-                    double sign2 = ((n % 2) == 0) ? -1 : 1;
-                    return (2.0 / Math.PI) * (sign2 * (1.0 / n));
+                    return (2.0 / Math.PI) * (1.0 / n);
+            }
+        }
+
+        private void DrawAxes(Graphics g, int width, int height)
+        {
+            using (Pen axisPen = new Pen(Color.Black, 1))
+            {
+                g.DrawLine(axisPen, leftMargin, height / 2, width - rightMargin, height / 2);
+                g.DrawLine(axisPen, leftMargin, 20, leftMargin, height - 20);
+
+                int numXTicks = 10;
+                for (int i = 0; i <= numXTicks; i++)
+                {
+                    int x = leftMargin + i * (width - leftMargin - rightMargin) / numXTicks;
+                    int y = height / 2;
+                    g.DrawLine(axisPen, x, y - 5, x, y + 5);
+                    string label = (i / (double)numXTicks).ToString("0.0");
+                    SizeF labelSize = g.MeasureString(label, this.Font);
+                    g.DrawString(label, this.Font, Brushes.Black, x - labelSize.Width / 2, y + 5);
+                }
+
+                int numYTicks = 4;
+                for (int i = -numYTicks; i <= numYTicks; i++)
+                {
+                    int y = height / 2 - i * (height / 2 - 20) / numYTicks;
+                    int x = leftMargin;
+                    g.DrawLine(axisPen, x - 5, y, x + 5, y);
+                    string label = (i / (double)numYTicks).ToString("0.0");
+                    SizeF labelSize = g.MeasureString(label, this.Font);
+                    g.DrawString(label, this.Font, Brushes.Black, x - labelSize.Width - 5, y - labelSize.Height / 2);
+                }
             }
         }
 
         private void numericUpDownFrequency_ValueChanged(object sender, EventArgs e)
         {
             frequency = (double)numericUpDownFrequency.Value;
+            btnDrawFourier_Click(sender, e);
         }
 
         private void numericUpDownPhase_ValueChanged(object sender, EventArgs e)
         {
             phaseShift = (double)numericUpDownPhase.Value * Math.PI / 180.0;
+            btnDrawFourier_Click(sender, e);
+        }
+
+        private void numericUpDownHarmonics_ValueChanged(object sender, EventArgs e)
+        {
+            harmonics = (int)numericUpDownHarmonics.Value;
+            btnDrawFourier_Click(sender, e);
         }
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -382,6 +413,7 @@ namespace lab3
             {
                 fourierShape = "Пилообразная";
             }
+            btnDrawFourier_Click(sender, e);
         }
 
         private void btnReturn_Click(object sender, EventArgs e)
@@ -391,7 +423,6 @@ namespace lab3
 
         private void groupBoxFourier_Enter(object sender, EventArgs e)
         {
-
         }
     }
 }

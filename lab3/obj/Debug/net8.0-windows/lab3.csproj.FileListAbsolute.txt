@@ -16,3 +16,4 @@ C:\Users\Ivan\source\repos\lab3\lab3\obj\Debug\net8.0-windows\ref\lab3.dll
 C:\Users\Ivan\source\repos\lab3\lab3\obj\Debug\net8.0-windows\lab3.MainMenu.resources
 C:\Users\Ivan\source\repos\lab3\lab3\obj\Debug\net8.0-windows\lab3.Part1Form.resources
 C:\Users\Ivan\source\repos\lab3\lab3\obj\Debug\net8.0-windows\lab3.Part2Form.resources
+C:\Users\Ivan\source\repos\lab3\lab3\obj\Debug\net8.0-windows\lab3.sourcelink.json
